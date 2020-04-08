@@ -43,9 +43,30 @@ public class TaxComputator {
 		return total;
 	}
 	
+	public static double standard(double income,double MPF){
+		double total;
+		total = income - MPF;
+		total = total *0.15;
+		return total;
+	}
+	
+	public static double comStandard(double income,double wincome,double MPF,double WMPF){
+		double total;
+		total = (income+wincome-MPF-WMPF)*0.15;
+		if(total <= 0){
+			total = 0;
+		}
+		return total;
+	}
+	
+
 	 public static void marriedcalculator(double income,double wifeincome) {
 	        // TODO code application logic here
-	        double HMPF = MPFcalculator(income);
+	        double ComTax;
+	        double Htax;
+	        double Wtax;
+	        
+		 	double HMPF = MPFcalculator(income);
 	        double WMPF = MPFcalculator(wifeincome);
 	        
 	        
@@ -55,12 +76,24 @@ public class TaxComputator {
 	        double CombineNet = HNetIncome + WNetIncome;
 	        
 	      
+	        if(income >=2500000){
+	        	Htax = standard(income,HMPF);
+	        }else{
+	        	Htax = taxCal(HNetIncome);
+	        }
 	        
-	        double Htax = taxCal(HNetIncome);
-	        double Wtax = taxCal(WNetIncome);
-	        double ComTax = taxCal(CombineNet);
+	        if(income >= 2500000){
+	        	Wtax = standard(wifeincome,WMPF);
+	        }else{
+	        	Wtax = taxCal(WNetIncome);
+	        }
+	        
+	        if((wifeincome + income) >=2500000){
+	        	ComTax = comStandard(income,wifeincome,HMPF,WMPF);
+	        }else{
+	        ComTax = taxCal(CombineNet);
+	        }
 
-	       
 	        if (ComTax == 0 ){
 	        	System.out.println("You don't need to pay Tax if you combine together.");
 		        System.out.println("-----------------------------------------------");
@@ -68,7 +101,6 @@ public class TaxComputator {
 	        System.out.println("If you combine the tax will be:");
 	        System.out.println("-----------------------------------------------");
 	        System.out.println(ComTax);
-
 	        }
 	        
 	        System.out.println("If you pay the tax in divided:");	        
@@ -98,6 +130,7 @@ public class TaxComputator {
 	        double MPF = MPFcalculator(income);
 	        System.out.println("Your MPF is: " + MPF);
 	        double NetIncome = Netincome(income,MPF);
+	        double Standard = standard(income,MPF);
 	        if(NetIncome <= 0){
 	        	System.out.println("Your don't need to pay tax,Thank you.");
 	        }else{
