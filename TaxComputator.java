@@ -52,10 +52,8 @@ public class TaxComputator {
 	
 	public static double comStandard(double income,double wincome,double MPF,double WMPF){
 		double total;
-		total = (income+wincome-MPF-WMPF)*0.15;
-		if(total <= 0){
-			total = 0;
-		}
+		total = income+wincome-MPF-WMPF;
+		total = total *0.15;
 		return total;
 	}
 	
@@ -135,7 +133,11 @@ public class TaxComputator {
 	        	System.out.println("Your don't need to pay tax,Thank you.");
 	        }else{
 	        System.out.println("Your Netincome is: " + NetIncome);
-	        double Tax = taxCal(NetIncome);
+			if(income>= 2500000){
+			Tax = standard(income,MPF);
+			}else{
+	        	Tax = taxCal(NetIncome);
+			}
 	        System.out.println("The tax total you need to pay: "+ Tax);
 	        }
 	    }
