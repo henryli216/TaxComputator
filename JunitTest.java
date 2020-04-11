@@ -3,8 +3,8 @@ import static org.junit.Assert.*;
 @SuppressWarnings("static-access")
 public class JunitTest {
 	TaxComputator test = new TaxComputator();
-	double T1 = test.standard(30000000);
-	double T2 = test.standard(6000000);
+	double T1 = test.standard(300000,18000);
+	double T2 = test.standard(3000000,18000);
 	double mpfT1 =test.MPFcalculator(370000);
 	double mpfT2 = test.MPFcalculator(180000);
 	double mpfT3 = test.MPFcalculator(40000);
@@ -22,8 +22,8 @@ public class JunitTest {
 	double ComT4 =test.comStandard(700000, 0, 18000, 0);
 	
 	@Test public void standardtest(){
-		assertEquals(897300,T2,0.0);
-		assertEquals(4497300,T1,0.0);
+		assertEquals(42300,T1,0.0);
+		assertEquals(447300,TT2,0.0);
 	}
 	@Test public void mpftest() {
 		assertEquals(18000,mpfT1,0.0);
@@ -37,8 +37,8 @@ public class JunitTest {
 		assertEquals(179710,tcT3,0.0);
 		assertEquals(0,tcT4,0.0);
 		assertEquals(9000,taxCal1,0.0);
-		assertEquals(1000,taxCal2,0.0);
-		assertEquals(466500,(float)taxCal3,0.0);
+		assertEquals(0,taxCal2,0.0);
+		assertEquals(447300,(float)taxCal3,0.0);
 	}
 	@Test public void Comstandardtest(){
 		assertEquals(151575,ComT1,0.0);
