@@ -1,3 +1,4 @@
+//Group Member: CHAN CHIU CHUN,LI KEE YIU
 import java.util.Scanner;
 
 public class TaxComputator {
@@ -43,9 +44,9 @@ public class TaxComputator {
 		return total;
 	}
 	
-	public static double standard(double income,double MPF){
+	public static double standard(double income){
 		double total;
-		total = income - MPF;
+		total = income - 18000;
 		total = total *0.15;
 		return total;
 	}
@@ -74,19 +75,19 @@ public class TaxComputator {
 	        double CombineNet = HNetIncome + WNetIncome;
 	        
 	      
-	        if(income >=2500000){
-	        	Htax = standard(income,HMPF);
+	        if(income >=2040025){
+	        	Htax = standard(income);
 	        }else{
 	        	Htax = taxCal(HNetIncome);
 	        }
 	        
-	        if(income >= 2500000){
+	        if(wifeincome >= 2040025){
 	        	Wtax = standard(wifeincome,WMPF);
 	        }else{
 	        	Wtax = taxCal(WNetIncome);
 	        }
 	        
-	        if((wifeincome + income) >=2500000){
+	        if((wifeincome + income) >=3200000){
 	        	ComTax = comStandard(income,wifeincome,HMPF,WMPF);
 	        }else{
 	        ComTax = taxCal(CombineNet);
@@ -125,6 +126,7 @@ public class TaxComputator {
 	    
 	    
 	    public static void singlecalculator(double income) {
+	    	double Tax;
 	        double MPF = MPFcalculator(income);
 	        System.out.println("Your MPF is: " + MPF);
 	        double NetIncome = Netincome(income,MPF);
@@ -133,7 +135,7 @@ public class TaxComputator {
 	        	System.out.println("Your don't need to pay tax,Thank you.");
 	        }else{
 	        System.out.println("Your Netincome is: " + NetIncome);
-			if(income>= 2500000){
+			if(income>= 2040025){
 			Tax = standard(income,MPF);
 			}else{
 	        	Tax = taxCal(NetIncome);
@@ -172,5 +174,3 @@ public class TaxComputator {
             }
 	     }
 }
-
-
