@@ -61,10 +61,11 @@ public class TaxComputator {
 
 	 public static void marriedcalculator(double income,double wifeincome) {
 	        // TODO code application logic here
+	        double ComSTax;
+	        double ComPTax;
+	        double Htax = 0;
+	        double Wtax = 0;
 	        double ComTax;
-	        double Htax;
-	        double Wtax;
-	        
 		 	double HMPF = MPFcalculator(income);
 	        double WMPF = MPFcalculator(wifeincome);
 	        
@@ -73,74 +74,86 @@ public class TaxComputator {
 	        double WNetIncome= Netincome(wifeincome,WMPF);
 	        
 	        double CombineNet = HNetIncome + WNetIncome;
-	        
-	      
-	        if(income >=2040025){
-	        	Htax = standard(income);
-	        }else{
-	        	Htax = taxCal(HNetIncome);
-	        }
-	        
-	        if(wifeincome >= 2040025){
-	        	Wtax = standard(wifeincome,WMPF);
-	        }else{
-	        	Wtax = taxCal(WNetIncome);
-	        }
-	        
-	        if((wifeincome + income) >=3200000){
-	        	ComTax = comStandard(income,wifeincome,HMPF,WMPF);
-	        }else{
-	        ComTax = taxCal(CombineNet);
-	        }
+	       
+	        double hStax = standard(income);
+	        double hPtax = taxCal(HNetIncome);
 
-	        if (ComTax == 0 ){
+	        double wStax = standard(wifeincome);
+	        double wPtax = taxCal(WNetIncome);
+	      
+	        ComSTax = comStandard(income,wifeincome,HMPF,WMPF);
+	        ComPTax = taxCal(CombineNet);
+
+
+	        if (CombineNet <= 0 ){
 	        	System.out.println("You don't need to pay Tax if you combine together.");
 		        System.out.println("-----------------------------------------------");
 	        }else{
-	        System.out.println("If you combine the tax will be:");
+	        	if(ComSTax >= ComPTax){
+	        System.out.println("If you combine the tax will be:(Progressive)");
 	        System.out.println("-----------------------------------------------");
-	        System.out.println(ComTax);
+	        System.out.println(ComPTax);
+	        ComTax = ComPTax;
+	        	}else{
+	        		 System.out.println("If you combine the tax will be:(Standard)");
+	     	        System.out.println("-----------------------------------------------");
+	     	        System.out.println(ComSTax);
+	     	        ComTax =ComSTax;
+	        	}
 	        }
 	        
 	        System.out.println("If you pay the tax in divided:");	        
 	        System.out.println("-----------------------------------------------");
 	        
-	        if(Htax == 0){
+	        if(HNetIncome <= 0){
 	        	System.out.println("Husband don't need to pay tax.");
 	        }else{
-	        	System.out.println("Husband Tax: " + Htax);
+	        	if(hStax <= hPtax){
+	        		System.out.println("Husband Tax:(Standard) " + hStax);
+	        		Htax = hStax;
+	        	}else
+	        	System.out.println("Husband Tax:(Progressive) " + hPtax);
+	        	Htax = hPtax;
 	        }
 	        
-	        if(Wtax == 0 ){
+	        if(WNetIncome <= 0 ){
 	        	System.out.println("Wife don't need to pay tax.");
 		        System.out.println("-----------------------------------------------");
 	        }else{
-	        System.out.println("Wife Tax: " + Wtax);
+	        	if(wPtax <= wStax){
+	        		System.out.println("Wife Tax:(Progressive) " + wPtax);
+	    	        System.out.println("-----------------------------------------------");
+	    	        Wtax = wPtax;
+	        	}else{
+	        System.out.println("Wife Tax:(Standard) " + wStax);
 	        System.out.println("-----------------------------------------------");
+	        Wtax = wStax;
 	        }
 	        
 	        if((Htax+Wtax) !=0 ){
 	        	System.out.println("The total Tax pay if pay in divided would be: " + (Htax+Wtax));
 	        }
 	    }
+	 }
 	    
 	    
 	    public static void singlecalculator(double income) {
-	    	double Tax;
+	    	double STax,PTax;
 	        double MPF = MPFcalculator(income);
 	        System.out.println("Your MPF is: " + MPF);
 	        double NetIncome = Netincome(income,MPF);
-	        double Standard = standard(income,MPF);
 	        if(NetIncome <= 0){
 	        	System.out.println("Your don't need to pay tax,Thank you.");
 	        }else{
 	        System.out.println("Your Netincome is: " + NetIncome);
-			if(income>= 2040025){
-			Tax = standard(income,MPF);
-			}else{
-	        	Tax = taxCal(NetIncome);
-			}
-	        System.out.println("The tax total you need to pay: "+ Tax);
+			STax = standard(income);
+	        PTax = taxCal(NetIncome);
+			if(PTax >= STax){
+	        System.out.println("The tax total you need to pay:(Standard) "+ STax);
+	        }else{
+	         System.out.println("The tax total you need to pay:(Progressive) "+ PTax);
+	        }
+	        	
 	        }
 	    }
 	    
