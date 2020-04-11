@@ -1,67 +1,50 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+@SuppressWarnings("static-access")
 public class JunitTest {
+	TaxComputator test = new TaxComputator();
+	double T1 = test.standard(30000000);
+	double T2 = test.standard(6000000);
+	double mpfT1 =test.MPFcalculator(370000);
+	double mpfT2 = test.MPFcalculator(180000);
+	double mpfT3 = test.MPFcalculator(40000);
+	double mpfT4 = test.MPFcalculator(60000);
+	double tcT1 = test.taxCal(313000);
+	double tcT2 = test.taxCal(5000);
+	double tcT3 = test.taxCal(1163000);
+	double tcT4 = test.taxCal(0);
+	double taxCal1 = TaxComputator.taxCal(150000);
+	double taxCal2 = TaxComputator.taxCal(50000);
+	double taxCal3 = TaxComputator.taxCal(2850000);
+	double ComT1 =test.comStandard(1000000, 30000, 18000, 1500);
+	double ComT2 =test.comStandard(4000, 1000000, 200, 18000);
+	double ComT3 =test.comStandard(60000, 34000, 3000, 1700);
+	double ComT4 =test.comStandard(700000, 0, 18000, 0);
+	
+	@Test public void standardtest(){
+		assertEquals(897300,T2,0.0);
+		assertEquals(4497300,T1,0.0);
+	}
 	@Test public void mpftest() {
-		double mpf = TaxComputator.MPFcalculator(370000);
-		double testmpf = 18000.0;
-		if(mpf==testmpf){
-		System.out.println("Function for mpf over 36000 is OK!");}
-		else{
-			System.out.println("Function for mpf over 360000 is False");
-		}
-		assertEquals(mpf,testmpf,0.0);
-		}
-	@Test public void mpfnormal(){
-		double mpfn = TaxComputator.MPFcalculator(180000);
-		double testmpfn = 9000.0;
-		if(mpfn == testmpfn){
-			System.out.println("Function for Normal MPF is OK!");
-		}else{
-			System.out.println("Function for Normal MPF is False!");
-		}
-		assertEquals(mpfn,testmpfn,0.0);
+		assertEquals(18000,mpfT1,0.0);
+		assertEquals(9000,mpfT2,0.0);
+		assertEquals(2000,mpfT3,0.0);
+		assertEquals(3000,mpfT4,0.0);
 	}
-	@Test public void combineNormal(){
-		double combineoutput = TaxComputator.taxCal(313000);
-		double testcombine = 35210.0;
-		if(combineoutput == testcombine){
-			System.out.println("Function for Progressive Tax is OK!");
-		}else{
-			System.out.println("Function for Progressive Tax is False!");
-		}
-		assertEquals(combineoutput,testcombine,0.0);
+	@Test public void taxCaltest(){
+		assertEquals(35210,tcT1,0.0);
+		assertEquals(100,tcT2,0.0);
+		assertEquals(179710,tcT3,0.0);
+		assertEquals(0,tcT4,0.0);
+		assertEquals(9000,taxCal1,0.0);
+		assertEquals(1000,taxCal2,0.0);
+		assertEquals(466500,(float)taxCal3,0.0);
 	}
-	@Test public void combineRich(){
-		double Richoutput =TaxComputator.comStandard(5000000,100000,18000,5000);
-		double Richtest = 761550.0;
-		if(Richoutput == Richtest){
-			System.out.println("Function using Standard Rate for Combined is OK!");
-		}else{
-			System.out.println("Function using Standard Rate for Combines is False!");
-		}
-		assertEquals(Richoutput,Richtest,0);
-	}
-	@Test public void singlePro(){
-		double single = TaxComputator.taxCal(393100);
-		double singletest = 48827;
-		if(single == singletest){
-			System.out.println("Function Using Progressive Rate for single is OK!");
-		}else{
-			System.out.println("Function Using Progressive Rate for singleis False!");
-		}
-		assertEquals(singletest,single,0.0);
-	}
-	@Test public void singleStandard(){
-		double stand = TaxComputator.standard(15000246);
-		double standtest = 2247336;
-		if(stand == standtest){
-			System.out.print("Function using standard Rate for single is OK!");
-		}else{
-			System.out.print("Function using standard Rate for single is False!");
-		}
-		assertEquals(stand,standtest,0.0);
-		
+	@Test public void Comstandardtest(){
+		assertEquals(151575,ComT1,0.0);
+		assertEquals(147870,ComT2,0.0);
+		assertEquals(13395,ComT3,0.0);
+		assertEquals(102300,ComT4,0.0);
 	}
 }
 
